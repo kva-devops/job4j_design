@@ -15,6 +15,6 @@ after_success:
 notifications:
   email:
     recipients:
-      - tribuna87@mail.ru
+      - kva.devops@gmail.com
     on_success: never
     on_failure: always
