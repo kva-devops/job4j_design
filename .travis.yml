@@ -1,11 +1,9 @@
 language: java
 
-os: linux
-
-dist: focal
-
 jdk:
   - openjdk14
+
+sudo: false
 
 env:
   global:
