@@ -3,7 +3,7 @@ language: java
 install: true
 
 script:
-  - mvn install
+  - sudo mvn install
 
 dist: focal
 
