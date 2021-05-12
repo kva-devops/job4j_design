@@ -7,8 +7,6 @@ dist: focal
 jdk:
   - openjdk14
 
-sudo: true
-
 env:
   global:
     - CODECOV_TOKEN="773ffab1-1e38-44f9-9cc1-d867f58f40fc"
