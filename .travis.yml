@@ -10,7 +10,7 @@ env:
     - CODECOV_TOKEN="773ffab1-1e38-44f9-9cc1-d867f58f40fc"
 
 after_success:
-  - bash <(curl -s https://codecov.is/bash)
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:
