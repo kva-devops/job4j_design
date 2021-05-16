@@ -13,12 +13,14 @@ public class EvenIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        for (int i = index; i < numbers.length; i++) {
-            if (isEven(numbers[i])) {
-                return true;
+        while (numbers[index] % 2 != 0) {
+            if (index < numbers.length - 1) {
+                index++;
+            } else {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -26,17 +28,6 @@ public class EvenIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        for (int j = index; j < numbers.length; j++) {
-            if (isEven(numbers[j])) {
-                index++;
-                return numbers[j];
-            }
-            index++;
-        }
-        return 0;
-    }
-
-    private boolean isEven(int number) {
-        return number % 2 == 0;
+        return numbers[index++];
     }
 }
