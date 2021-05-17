@@ -2,16 +2,16 @@ package ru.job4j.generics;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleArray<T> implements Iterable<T> {
+public class SimpleArray<T> implements Iterator<T> {
 
     private int indexArray = 0;
-    final private int count;
+    private int indexIterator = 0;
     final private T[] array;
 
-    public SimpleArray(int count, T[] array) {
-        this.count = count;
+    public SimpleArray(T[] array) {
         this.array = array;
     }
 
@@ -21,38 +21,59 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void set(int index, T model) {
         int checkedIndex = checkIndex(index);
-        array[checkedIndex] = model;
+        if (checkedIndex != -1) {
+            array[checkedIndex] = model;
+        }
     }
 
     public void remove(int index) {
         int checkedIndex = checkIndex(index);
-        array[checkedIndex] = null;
-        System.arraycopy(array, checkedIndex + 1, array, checkedIndex, array.length - checkedIndex - 1);
-        if (array[array.length - 1] != null) {
-            array[array.length - 1] = null;
+        if (checkedIndex != -1) {
+            array[checkedIndex] = null;
+            System.arraycopy(array, checkedIndex + 1, array, checkedIndex, array.length - checkedIndex - 1);
+            if (array[array.length - 1] != null) {
+                array[array.length - 1] = null;
+            }
+            indexArray--;
         }
-        indexArray--;
     }
 
     public T get(int index) {
         int checkedIndex = checkIndex(index);
-        return array[checkedIndex];
+        if (checkedIndex != -1) {
+            return array[checkedIndex];
+        }
+        return null;
     }
 
     private int checkIndex(int index) {
-        return Objects.checkIndex(index, array.length);
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return Arrays.stream(array).iterator();
+        if (array[Objects.checkIndex(index, array.length)] != null) {
+            return index;
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override
     public String toString() {
         return "SimpleArray{"
-                + "count=" + count
                 + ", array=" + Arrays.toString(array)
                 + '}';
+    }
+
+    @Override
+    public boolean hasNext() {
+        while (array.length > indexIterator && array[indexIterator] == null) {
+            indexIterator++;
+        }
+        return array.length > indexIterator &&  array[indexIterator] != null;
+    }
+
+    @Override
+    public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return array[indexIterator++];
     }
 }
