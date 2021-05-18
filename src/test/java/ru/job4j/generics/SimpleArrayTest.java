@@ -3,6 +3,9 @@ package ru.job4j.generics;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.Matchers.is;
 
 public class SimpleArrayTest {
@@ -43,17 +46,26 @@ public class SimpleArrayTest {
         arrayInt.add(20);
         arrayInt.add(30);
         arrayInt.add(40);
-        Assert.assertThat(arrayInt.next(), is(10));
-        Assert.assertThat(arrayInt.next(), is(20));
-        Assert.assertThat(arrayInt.next(), is(30));
-        Assert.assertThat(arrayInt.next(), is(40));
-        Assert.assertThat(arrayInt.hasNext(), is(false));
+        Iterator<Integer> it = arrayInt.iterator();
+        Assert.assertThat(it.next(), is(10));
+        Assert.assertThat(it.next(), is(20));
+        Assert.assertThat(it.next(), is(30));
+        Assert.assertThat(it.next(), is(40));
+        Assert.assertThat(it.hasNext(), is(false));
     }
 
     @Test
     public void whenAllElementIsNullIteratorReturnFalse() {
         SimpleArray<Integer> arrayInt = new SimpleArray<>(new Integer[sizeArray]);
-        Assert.assertThat(arrayInt.hasNext(), is(false));
+        Iterator<Integer> it = arrayInt.iterator();
+        Assert.assertThat(it.hasNext(), is(false));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenIteratorNoSuchElementException() {
+        SimpleArray<Integer> arrayInt = new SimpleArray<>(new Integer[sizeArray]);
+        Iterator<Integer> it = arrayInt.iterator();
+        it.next();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -79,5 +91,4 @@ public class SimpleArrayTest {
         arrayInt.add(20);
         arrayInt.set(4, 30);
     }
-
 }

@@ -5,10 +5,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleArray<T> implements Iterator<T> {
+public class SimpleArray<T> implements Iterable<T> {
 
     private int indexArray = 0;
-    private int indexIterator = 0;
+
     final private T[] array;
 
     public SimpleArray(T[] array) {
@@ -20,17 +20,17 @@ public class SimpleArray<T> implements Iterator<T> {
     }
 
     public void set(int index, T model) {
-        int checkedIndex = checkIndex(index);
-        if (checkedIndex != -1) {
-            array[checkedIndex] = model;
+        checkIndex(index);
+        if (index != -1) {
+            array[index] = model;
         }
     }
 
     public void remove(int index) {
-        int checkedIndex = checkIndex(index);
-        if (checkedIndex != -1) {
-            array[checkedIndex] = null;
-            System.arraycopy(array, checkedIndex + 1, array, checkedIndex, array.length - checkedIndex - 1);
+        checkIndex(index);
+        if (index != -1) {
+            array[index] = null;
+            System.arraycopy(array, index + 1, array, index, array.length - index - 1);
             if (array[array.length - 1] != null) {
                 array[array.length - 1] = null;
             }
@@ -39,19 +39,12 @@ public class SimpleArray<T> implements Iterator<T> {
     }
 
     public T get(int index) {
-        int checkedIndex = checkIndex(index);
-        if (checkedIndex != -1) {
-            return array[checkedIndex];
-        }
-        return null;
+        checkIndex(index);
+        return array[index];
     }
 
-    private int checkIndex(int index) {
-        if (array[Objects.checkIndex(index, array.length)] != null) {
-            return index;
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
+    private void checkIndex(int index) {
+        Objects.checkIndex(index, indexArray);
     }
 
     @Override
@@ -62,18 +55,25 @@ public class SimpleArray<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean hasNext() {
-        while (array.length > indexIterator && array[indexIterator] == null) {
-            indexIterator++;
-        }
-        return array.length > indexIterator &&  array[indexIterator] != null;
-    }
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private int indexIterator = 0;
 
-    @Override
-    public T next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        return array[indexIterator++];
+            @Override
+            public boolean hasNext() {
+                while (indexArray > indexIterator && array[indexIterator] == null) {
+                    indexIterator++;
+                }
+                return indexArray > indexIterator &&  array[indexIterator] != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return array[indexIterator++];
+            }
+        };
     }
 }
