@@ -26,10 +26,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     private void checkIndex(int index) {
-        int indexAfter = Objects.checkIndex(index, lengthContainer);
-        if (elementCount == 0 || indexAfter > elementCount - 1) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, elementCount);
     }
 
     private Object[] expandArray(Object[] source) {
@@ -50,7 +47,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return index < elementCount && container[index] != null;
+                return index < elementCount;
             }
 
             @Override
