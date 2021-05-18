@@ -49,10 +49,7 @@ public class SimpleLinkedList<E> implements List<E> {
     }
 
     private void checkIndex(int index) {
-        int indexAfter = Objects.checkIndex(index, containerLength);
-        if (elementCount == 0 || indexAfter > elementCount - 1) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, elementCount);
     }
 
     @Override
@@ -63,7 +60,7 @@ public class SimpleLinkedList<E> implements List<E> {
 
             @Override
             public boolean hasNext() {
-                return index < elementCount && container[index] != null;
+                return index < elementCount;
             }
 
             @Override
