@@ -1,6 +1,8 @@
 package ru.job4j.collection;
 
-public class SimpleStack<T> {
+import java.util.Iterator;
+
+public class SimpleStack<T> implements Iterable<T> {
     private ForwardLinked<T> linked = new ForwardLinked<>();
 
     public T pop() {
@@ -9,5 +11,10 @@ public class SimpleStack<T> {
 
     public void push(T value) {
         linked.addFirst(value);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return linked.iterator();
     }
 }
