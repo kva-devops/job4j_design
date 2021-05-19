@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 public class SimpleArrayTest {
     public static int sizeArray = 5;
@@ -90,5 +91,16 @@ public class SimpleArrayTest {
         arrayInt.add(10);
         arrayInt.add(20);
         arrayInt.set(4, 30);
+    }
+
+    @Test
+    public void whenIteratorMethodReturnNextElementNull() {
+        SimpleArray<Integer> arrayInt = new SimpleArray<>(new Integer[sizeArray]);
+        arrayInt.add(null);
+        arrayInt.add(null);
+        Iterator<Integer> it = arrayInt.iterator();
+        Assert.assertThat(it.next(), nullValue());
+        Assert.assertThat(it.next(), nullValue());
+        Assert.assertThat(it.hasNext(), is(false));
     }
 }
