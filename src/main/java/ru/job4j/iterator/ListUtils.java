@@ -1,4 +1,4 @@
-package ru.job4j.iterator.ru.job4j.iterator;
+package ru.job4j.iterator;
 
 import java.util.List;
 import java.util.ListIterator;

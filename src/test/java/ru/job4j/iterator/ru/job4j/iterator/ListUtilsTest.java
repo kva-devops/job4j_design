@@ -1,8 +1,8 @@
 package ru.job4j.iterator.ru.job4j.iterator;
 
 import org.hamcrest.core.Is;
-import org.junit.Rule;
 import org.junit.Test;
+import ru.job4j.iterator.ListUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
