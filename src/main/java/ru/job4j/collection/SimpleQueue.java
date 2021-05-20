@@ -8,20 +8,22 @@ public class SimpleQueue<T> {
 
     public T poll() {
         Iterator<T> itIn = in.iterator();
-        while (itIn.hasNext()) {
-            out.push(itIn.next());
-            in.pop();
-        }
-        T rsl = out.pop();
         Iterator<T> itOut = out.iterator();
-        while (itOut.hasNext()) {
-            in.push(itOut.next());
-            out.pop();
+        if (!itOut.hasNext()) {
+            while (itIn.hasNext()) {
+                out.push(itIn.next());
+                in.pop();
+            }
         }
-        return rsl;
+        return out.pop();
     }
 
     public void push(T value) {
+        Iterator<T> itOut = out.iterator();
+        if (itOut.hasNext()) {
+            in.push(itOut.next());
+            out.pop();
+        }
         in.push(value);
     }
 }
