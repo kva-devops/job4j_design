@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleLinkedList<E> implements List<E> {
-    private int containerLength = 2;
 
     private int changeCount = 0;
 
@@ -15,8 +14,6 @@ public class SimpleLinkedList<E> implements List<E> {
     Node<E> first;
 
     Node<E> last;
-
-    private Object[] container = new Object[containerLength];
 
     @Override
     public void add(E value) {
@@ -28,24 +25,22 @@ public class SimpleLinkedList<E> implements List<E> {
         } else {
             l.next = newNode;
         }
-        if (elementCount >= containerLength) {
-            container = expandArray(container);
-        }
-        container[elementCount++] = newNode;
+        elementCount++;
         changeCount++;
     }
 
     @Override
     public E get(int index) {
         checkIndex(index);
-        return ((Node<E>) container[index]).getItem();
-    }
-
-    private Object[] expandArray(Object[] source) {
-        containerLength *= 2;
-        Object[] buffContainer = new Object[containerLength];
-        System.arraycopy(source, 0, buffContainer, 0, source.length);
-        return buffContainer;
+        Node<E> rsl = first;
+        Node<E> buff = rsl.next;
+        int counter = 0;
+        while (counter != index) {
+            rsl = buff;
+            buff = rsl.next;
+            counter++;
+        }
+        return rsl.getItem();
     }
 
     private void checkIndex(int index) {
@@ -71,10 +66,19 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (expectedModCount != changeCount) {
                     throw new ConcurrentModificationException();
                 }
-                return ((Node<E>) container[index++]).getItem();
+                Node<E> rsl = first;
+                Node<E> buff = rsl.next;
+                if (index == 0) {
+                    index++;
+                    return rsl.getItem();
+                }
+                while (index != elementCount) {
+                    rsl = buff;
+                    buff = rsl.next;
+                    index++;
+                }
+                return rsl.getItem();
             }
         };
     }
-
-
 }
