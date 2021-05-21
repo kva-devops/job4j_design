@@ -19,11 +19,6 @@ public class SimpleQueue<T> {
     }
 
     public void push(T value) {
-        Iterator<T> itOut = out.iterator();
-        if (itOut.hasNext()) {
-            in.push(itOut.next());
-            out.pop();
-        }
         in.push(value);
     }
 }
