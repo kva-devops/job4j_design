@@ -25,6 +25,11 @@ public class User {
         return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
+
     public static void main(String[] args) {
         User user1 = new User("Billy", 3, new GregorianCalendar(1980, 1, 23));
         User user2 = new User("Billy", 3, new GregorianCalendar(1980, 1, 23));
