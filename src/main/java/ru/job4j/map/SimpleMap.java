@@ -23,10 +23,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
             expand();
         }
         MapEntry<K, V> buff = new MapEntry(key, value);
-        table[indexFor(hash(key.hashCode()))] = buff;
+        int checkIndex = indexFor(hash(key.hashCode()));
+        if (table[checkIndex] != null) {
+            return false;
+        }
+        table[checkIndex] = buff;
         count++;
         modCount++;
         return true;
+
     }
 
     private int hash(int hashCode) {
@@ -52,7 +57,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && count != 0 && table[index].key == key) {
+        if (table[index] != null && count != 0 && table[index].key.equals(key)) {
             return table[index].value;
         }
         return null;
@@ -75,11 +80,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return new Iterator<K>() {
 
             int fixModCount = modCount;
-            int itIndex = 1;
+            int returnElement = 0;
+            int indexIt = 0;
 
             @Override
             public boolean hasNext() {
-                return itIndex < count;
+                while (count != 0 && returnElement <= count) {
+                    if (table[indexIt++] != null) {
+                        returnElement++;
+                        return true;
+                    }
+                }
+                return false;
             }
 
             @Override
@@ -90,7 +102,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (modCount != fixModCount) {
                     throw new ConcurrentModificationException();
                 }
-                return table[itIndex++].key;
+                return table[indexIt].key;
             }
         };
     }

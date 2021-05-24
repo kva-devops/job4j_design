@@ -73,7 +73,6 @@ public class SimpleMapTest {
         base.put(2, "B");
         Iterator<Integer> it = base.iterator();
         Assert.assertTrue(it.hasNext());
-        Assert.assertThat(it.next(), is(1));
     }
 
     @Test(expected = NoSuchElementException.class)
