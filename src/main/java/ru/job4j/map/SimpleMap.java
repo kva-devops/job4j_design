@@ -19,9 +19,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if (count / capacity >= LOAD_FACTOR) {
+        if ((float) count / (float) capacity >= LOAD_FACTOR) {
             expand();
-            return false;
         }
         MapEntry<K, V> buff = new MapEntry(key, value);
         table[indexFor(hash(key.hashCode()))] = buff;
@@ -42,10 +41,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
         capacity *= 2;
         MapEntry<K, V>[] buff = new MapEntry[capacity];
         for (MapEntry node : table) {
-            int index = indexFor(hash(node.key.hashCode()));
-            buff[index] = node;
+            if (node != null) {
+                int index = indexFor(hash(node.key.hashCode()));
+                buff[index] = node;
+            }
         }
-        table = Arrays.copyOf(table, capacity);
         table = buff;
     }
 
@@ -61,7 +61,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         int index = indexFor(hash(key.hashCode()));
-        if (count != 0 && index <= count && table[index].key == key) {
+        if (count != 0 && index <= count && table[index].key.equals(key)) {
             table[index] = null;
             count--;
             modCount++;

@@ -31,7 +31,6 @@ public class SimpleMapTest {
         base.put(6, "F");
         base.put(7, "G");
         base.put(8, "H");
-        Assert.assertFalse(base.put(9, "I"));
         base.put(9, "I");
         Assert.assertThat(base.get(9), is("I"));
     }
