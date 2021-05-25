@@ -78,20 +78,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public Iterator<K> iterator() {
         return new Iterator<K>() {
-
             int fixModCount = modCount;
-            int returnElement = 0;
             int indexIt = 0;
 
             @Override
             public boolean hasNext() {
-                while (count != 0 && returnElement <= count) {
-                    if (table[indexIt++] != null) {
-                        returnElement++;
-                        return true;
-                    }
+                while (indexIt < table.length && table[indexIt] == null) {
+                    indexIt++;
                 }
-                return false;
+                return indexIt < table.length;
             }
 
             @Override
