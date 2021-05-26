@@ -1,42 +1,27 @@
 package ru.job4j.collection.analize;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Analize {
     public Info diff(List<User> previous, List<User> current) {
-        return new Info(
-                checkAdded(previous, current),
-                checkChanged(previous, current),
-                checkDeleted(previous, current)
-        );
-    }
-
-    private int checkDeleted(List<User> previous, List<User> current) {
-        int prevSizeBefore = previous.size();
-        List<User> buff = new ArrayList<>(previous);
-        buff.retainAll(current);
-        return prevSizeBefore - buff.size();
-
-    }
-
-    private int checkChanged(List<User> previous, List<User> current) {
-        int counterChange = 0;
+        int addCounter = 0;
+        int changeCounter = 0;
+        Map<Integer, User> buffMap = new HashMap<>();
         for (User elemPrev : previous) {
-            for (User elemCurr : current) {
-                if (elemPrev.getId() == elemCurr.getId() && !elemPrev.getName().equals(elemCurr.getName())) {
-                    counterChange++;
+            buffMap.put(elemPrev.getId(), elemPrev);
+        }
+        for (User elemCurr : current) {
+            User buffUser = buffMap.put(elemCurr.getId(), elemCurr);
+            if (buffUser == null) {
+                addCounter++;
+            } else {
+                if (!elemCurr.getName().equals(buffUser.getName())) {
+                    changeCounter++;
                 }
             }
         }
-        return counterChange;
-    }
-
-    private int checkAdded(List<User> previous, List<User> current) {
-        List<User> buff = new ArrayList<>(previous);
-        buff.retainAll(current);
-        return current.size() - buff.size();
+        int delCounter = previous.size() + addCounter - current.size();
+        return new Info(addCounter, changeCounter, delCounter);
     }
 
     public static class User {
