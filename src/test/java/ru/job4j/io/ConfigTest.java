@@ -27,8 +27,8 @@ public class ConfigTest {
         assertThat(config.value("checked"), is("yes"));
     }
 
-    @Test
-    public void whenPairWithError() throws IllegalArgumentException {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPairWithError1() throws IllegalArgumentException {
         String path = "./data/pair_with_error.properties";
         Config config = new Config(path);
         config.load();
