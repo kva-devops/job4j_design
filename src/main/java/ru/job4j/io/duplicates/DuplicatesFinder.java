@@ -6,10 +6,11 @@ import java.nio.file.Path;
 
 public class DuplicatesFinder {
     public static void main(String[] args) throws IOException {
-        if (args.length > 0) {
-            Files.walkFileTree(Path.of(args[0]), new DuplicatesVisitor());
-        } else {
-            System.out.println("Enter this: \"java -jar duplicatesFinder.jar your_directory_for_scan\"");
+        if (args.length == 0) {
+            throw new IllegalArgumentException(
+                    "Correct input: java -jar duplicatesFinder.jar your_directory_for_scan"
+            );
         }
+        Files.walkFileTree(Path.of(args[0]), new DuplicatesVisitor());
     }
 }
