@@ -35,15 +35,19 @@ public class Analise {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-            for (String s : timeList) {
-                out.write(s + System.lineSeparator());
+        writeResult(timeList, target);
+    }
+
+    private void writeResult(List<String> list, String filepath) {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(filepath)))) {
+            for (String s : list) {
+                out.write(s);
+                out.println();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public static void main(String[] args) {
         Analise analise = new Analise();
         String pathLog = "./data/server.log";
