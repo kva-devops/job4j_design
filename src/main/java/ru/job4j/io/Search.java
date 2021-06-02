@@ -10,8 +10,12 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
-        System.out.println(search(start, p -> p.toFile().getName().endsWith("js")));
+        if (args.length == 0 || args.length == 1) {
+            throw new IllegalArgumentException(
+                    "Enter path for searching and extension of file: /some/path extension");
+        }
+        Path start = Paths.get(args[0]);
+        System.out.println(search(start, p -> p.toFile().getName().endsWith(args[1])));
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
