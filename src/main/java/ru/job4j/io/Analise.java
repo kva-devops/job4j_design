@@ -48,10 +48,4 @@ public class Analise {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-        Analise analise = new Analise();
-        String pathLog = "./data/server.log";
-        String pathResult = "./unavailable.csv";
-        analise.unavailable(pathLog, pathResult);
-    }
 }
