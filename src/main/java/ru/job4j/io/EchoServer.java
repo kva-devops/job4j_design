@@ -17,21 +17,16 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     String[] buffArr;
-                    String answer = "";
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
                         if (str.contains("?msg=")) {
                             buffArr = str.split(" ");
-                            if ("Exit".equals(buffArr[1].substring(6))) {
+                            if ("Bye".equals(buffArr[1].substring(6))) {
                                 server.close();
-                            } else if ("Hello".equals(buffArr[1].substring(6))) {
-                                answer = "Hello";
-                            } else {
-                                answer = "What";
                             }
                         }
                     }
-                    out.write(answer.getBytes());
+                    out.write("HTTP/1.1 200 OK\r\n".getBytes());
                 }
             }
         }
