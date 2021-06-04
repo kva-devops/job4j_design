@@ -20,39 +20,50 @@ public class ConsoleChat {
 
     public void run() {
         List<String> baseAnswerBot = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(botAnswers))) {
-            br.lines().forEach(baseAnswerBot::add);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<String> logChat = new ArrayList<>();
+        readList(baseAnswerBot, botAnswers);
         Scanner scan = new Scanner(System.in);
         String buffStr;
         boolean turnOnBot = true;
-            try (PrintWriter pw = new PrintWriter(new FileWriter(path, StandardCharsets.UTF_8, true))) {
-                while (scan.hasNextLine()) {
-                    buffStr = scan.nextLine();
-                    pw.write(buffStr);
-                    pw.println();
-                    if (buffStr.equals(OUT)) {
-                        scan.close();
-                        break;
-                    }
-                    if (buffStr.equals(STOP)) {
-                        turnOnBot = false;
-                    }
-                    if (buffStr.equals(CONTINUE) && !turnOnBot) {
-                        turnOnBot = true;
-                    }
-                    if (turnOnBot) {
-                        buffStr = botSays(baseAnswerBot);
-                        pw.write(buffStr);
-                        pw.println();
-                        System.out.println(buffStr);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        while (scan.hasNextLine()) {
+            buffStr = scan.nextLine();
+            logChat.add(buffStr);
+            if (buffStr.equals(OUT)) {
+                scan.close();
+                break;
             }
+            if (buffStr.equals(STOP)) {
+                turnOnBot = false;
+            }
+            if (buffStr.equals(CONTINUE) && !turnOnBot) {
+                turnOnBot = true;
+            }
+            if (turnOnBot) {
+                buffStr = botSays(baseAnswerBot);
+                logChat.add(buffStr);
+                System.out.println(buffStr);
+            }
+        }
+        writeLog(logChat, path);
+    }
+
+    private void writeLog(List<String> list, String path) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path, StandardCharsets.UTF_8, true))) {
+            for (String s : list) {
+                pw.write(s);
+                pw.println();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readList(List<String> list, String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            br.lines().forEach(list::add);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String botSays(List<String> data) {
