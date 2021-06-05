@@ -23,6 +23,7 @@ public class EchoServer {
                         if (str.contains("?msg=")) {
                             buffArr = str.split(" ");
                             if ("Exit".equals(buffArr[1].substring(6))) {
+                                answer = "GoodBye!";
                                 server.close();
                             } else if ("Hello".equals(buffArr[1].substring(6))) {
                                 answer = "Hello";
