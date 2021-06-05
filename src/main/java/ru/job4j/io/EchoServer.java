@@ -22,13 +22,14 @@ public class EchoServer {
                     String str = in.readLine();
                     String[] buffArr;
                     String answer = "";
+                    boolean turnOn = true;
                     while (!(str).isEmpty()) {
                         System.out.println(str);
                         if (str.contains("?msg=")) {
                             buffArr = str.split(" ");
                             if ("Exit".equals(buffArr[1].substring(6))) {
                                 answer = "GoodBye!";
-                                server.close();
+                                turnOn = false;
                             } else if ("Hello".equals(buffArr[1].substring(6))) {
                                 answer = "Hello";
                             } else {
@@ -39,6 +40,9 @@ public class EchoServer {
                     }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write(answer.getBytes());
+                    if (!turnOn) {
+                        server.close();
+                    }
                 } catch (Exception e) {
                     LOG.error("IO error:", e);
                 }
