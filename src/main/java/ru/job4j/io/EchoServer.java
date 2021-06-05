@@ -15,10 +15,10 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    String str;
+                    String str = in.readLine();
                     String[] buffArr;
                     String answer = "";
-                    while (!(str = in.readLine()).isEmpty()) {
+                    while (!(str).isEmpty()) {
                         System.out.println(str);
                         if (str.contains("?msg=")) {
                             buffArr = str.split(" ");
@@ -30,9 +30,10 @@ public class EchoServer {
                                 answer = "What";
                             }
                         }
+                        str = in.readLine();
                     }
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write(answer.getBytes());
-
                 }
             }
         }
