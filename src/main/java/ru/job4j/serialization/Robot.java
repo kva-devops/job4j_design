@@ -1,7 +1,6 @@
 package ru.job4j.serialization;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -33,6 +32,26 @@ public class Robot {
                 + '}';
     }
 
+    public int getSerialNum() {
+        return serialNum;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public boolean isMilitary() {
+        return military;
+    }
+
+    public String[] getWeapons() {
+        return weapons;
+    }
+
+    public DriverOfRobot getDriver() {
+        return driver;
+    }
+
     public static void main(String[] args) {
         String[] wList = new String[] {
                 "pistol", "rifle", "rocket"};
@@ -41,14 +60,13 @@ public class Robot {
         );
         Robot firstRobot = new Robot(
                 111111, "Robocop", true, wList, rDriver);
-        System.out.println("Init object: " + firstRobot);
-        final Gson gson = new GsonBuilder().create();
-        String objectRobotInJson = gson.toJson(firstRobot);
-        System.out.println("Object in JSON format: " + objectRobotInJson);
-        Robot recoverFromJson = gson.fromJson(
-                objectRobotInJson, Robot.class
-        );
-        System.out.println("JSON to object recover: " + recoverFromJson);
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serial", firstRobot.getSerialNum());
+        jsonObject.put("model", firstRobot.getModel());
+        jsonObject.put("military", firstRobot.isMilitary());
+        jsonObject.put("weapons", firstRobot.getWeapons());
+        jsonObject.put("driver", firstRobot.getDriver());
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(firstRobot));
     }
 }

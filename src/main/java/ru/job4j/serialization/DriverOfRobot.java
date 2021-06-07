@@ -19,4 +19,16 @@ public class DriverOfRobot {
                 + ", passport=" + passport
                 + '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public int getPassport() {
+        return passport;
+    }
 }
