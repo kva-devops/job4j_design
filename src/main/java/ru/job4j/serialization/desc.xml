@@ -1,9 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <worker salary="100000" position="software developer" collegDegree="true">
-    <person name="James Bond" age="40" sex="male">self</person>
-    <person name="Jane Seymour" age="35" sex="female">wife</person>
-    <childs>
+    <self name="James Bond" age="40" sex="male"/>
+    <wife name="Jane Seymour" age="35" sex="female"/>
+    <childes>
         <child name="Bill" age="10" sex="male">son1</child>
         <child name="John" age="15" sex="male">son2</child>
-    </childs>
+    </childes>
 </worker>
