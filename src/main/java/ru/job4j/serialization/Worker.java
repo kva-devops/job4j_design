@@ -3,7 +3,9 @@ package ru.job4j.serialization;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +76,17 @@ public class Worker {
         JAXBContext context = JAXBContext.newInstance(Worker.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String result = "";
         try (StringWriter writer = new StringWriter()) {
             marshaller.marshal(wFirst, writer);
-            String result = writer.getBuffer().toString();
+            result = writer.getBuffer().toString();
             System.out.println(result);
+        } catch (Exception e) {
+        }
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(result)) {
+            Worker wResult = (Worker) unmarshaller.unmarshal(reader);
+            System.out.println(wResult);
         } catch (Exception e) {
         }
     }
