@@ -119,10 +119,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>ZipUtility</finalName>
+                            <finalName>FindFileUtility</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.job4j.io.Zip</mainClass>
+                                    <mainClass>ru.job4j.io.search.Searching</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
