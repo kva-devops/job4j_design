@@ -1,0 +1,9 @@
+create table person(
+	id serial primary key,
+	name varchar,
+	birthday date,
+	married boolean
+)
+insert into person(name, birthday, married) values('Billy', '1959.05.06', true);
+update person set name='Bill';
+delete from person;
