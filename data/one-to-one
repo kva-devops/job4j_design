@@ -1,0 +1,12 @@
+create table holder (
+	id serial primary key,
+	name varchar(255),
+	address varchar(255)
+)
+
+create table gun (
+	id serial primary key,
+	model varchar(255),
+	cal varchar(255),
+	holder_id int references holder(id)
+)

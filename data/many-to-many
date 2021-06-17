@@ -1,0 +1,16 @@
+create table cars (
+	id serial primary key,
+	model varchar(255)
+)
+
+create table drivers (
+	id serial primary key,
+	name varchar(255),
+	license varchar(255)
+)
+
+create table cars_drivers (
+	id serial primary key,
+	car_id int references cars(id),
+	driver_id int references drivers(id)
+)

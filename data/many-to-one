@@ -1,0 +1,12 @@
+create table recorder
+(
+	id serial primary key,
+	name varchar(255)
+)
+
+create table camera
+(
+	id serial primary key,
+	name varchar(255),
+	recorder_id int references recorder(id)
+)
