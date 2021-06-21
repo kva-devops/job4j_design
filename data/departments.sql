@@ -39,8 +39,8 @@ select *
 from employees as e left join departments as d
 on department_id = d.id;
 select *
-from employees as e right join departments as d
-on department_id = d.id;
+from departments as d right join employees as e
+on d.id = e.department_id;
 select *
 from employees as e full join departments as d
 on department_id = d.id;
@@ -72,6 +72,7 @@ insert into teens (name, gender) values('Lisa', 'female');
 insert into teens (name, gender) values('Nataly', 'female');
 
 select t1.name as one, t2.name as two
-from teens t1 cross join teens t2;
+from teens t1 cross join teens t2
+where t1.gender != t2.gender;
 
 
