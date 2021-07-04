@@ -1,2 +1,0 @@
-/home/kustoff/projects/job4j_design/target/maven-archiver/pom.properties
-/home/kustoff/projects/job4j_design/pom.xml
