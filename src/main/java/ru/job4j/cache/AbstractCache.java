@@ -17,6 +17,7 @@ public abstract class AbstractCache<K, V> {
             System.out.println("Cache is empty");
             return load(key);
         }
+        System.out.println("This entry from cache");
         return buff.get() != null ? buff.get() : load(key);
     }
 

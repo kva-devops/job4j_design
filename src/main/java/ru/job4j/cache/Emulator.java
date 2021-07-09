@@ -13,5 +13,6 @@ public class Emulator extends DirFileCache {
         Emulator start = new Emulator(dir);
         System.out.println(start.get(file1));
         System.out.println(start.get(file2));
+        System.out.println(start.get(file1));
     }
 }
