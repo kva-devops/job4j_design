@@ -17,14 +17,7 @@ public class ReportEngineHR implements Report {
         StringBuilder text = new StringBuilder();
         text.append("Name; Salary;");
         List<Employee> buff = store.findBy(filter);
-        Comparator<Employee> comparator = (employee, t1) -> {
-            if (employee.getSalary() > t1.getSalary()) {
-                return 1;
-            } else if (employee.getSalary() < t1.getSalary()) {
-                return -1;
-            }
-            return 0;
-        };
+        Comparator<Employee> comparator = Comparator.comparingDouble(Employee::getSalary);
         buff.sort(comparator.reversed());
         for (Employee employee : buff) {
             text.append(employee.getName()).append(";")
