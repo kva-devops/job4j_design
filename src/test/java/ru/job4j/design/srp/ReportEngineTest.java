@@ -2,7 +2,9 @@ package ru.job4j.design.srp;
 
 import org.junit.Test;
 
+import javax.xml.bind.JAXBException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -10,7 +12,7 @@ import static org.junit.Assert.assertThat;
 public class ReportEngineTest {
 
     @Test
-    public void whenOldGenerated() {
+    public void whenOldGenerated() throws JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
@@ -27,7 +29,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenReportToDevelopers() {
+    public void whenReportToDevelopers() throws JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
@@ -46,7 +48,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenReportToAccountsDepart() {
+    public void whenReportToAccountsDepart() throws JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
@@ -63,7 +65,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenReportToHR() {
+    public void whenReportToHR() throws JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker1 = new Employee("Ivan", now, now, 100);
@@ -80,5 +82,50 @@ public class ReportEngineTest {
                 .append(worker1.getSalary()).append(";")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenReportXml() throws JAXBException {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee(
+                "Ivan",
+                new GregorianCalendar(2017, 1, 25),
+                new GregorianCalendar(2017, 5, 25),
+                100);
+        store.add(worker);
+        Report engine = new ReportEngineXml(store);
+        assertThat(engine.generate(em -> true), is("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<employee name=\"Ivan\" hired=\"2017-02-25T00:00:00+04:00\" fired=\"2017-06-25T00:00:00+04:00\" salary=\"100.0\"/>\n"));
+    }
+
+    @Test
+    public void whenReportJson() throws JAXBException {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee(
+                "Ivan",
+                new GregorianCalendar(2017, 1, 25),
+                new GregorianCalendar(2017, 5, 25),
+                100);
+        store.add(worker);
+        Report engine = new ReportEngineJson(store);
+        String expect = "[\n  {\n    "
+                + "\"name\": \"Ivan\",\n    "
+                + "\"hired\": {\n      "
+                + "\"year\": 2017,\n      "
+                + "\"month\": 1,\n      "
+                + "\"dayOfMonth\": 25,\n      "
+                + "\"hourOfDay\": 0,\n      "
+                + "\"minute\": 0,\n     "
+                + " \"second\": 0\n    },\n    "
+                + "\"fired\": {\n      "
+                + "\"year\": 2017,\n      "
+                + "\"month\": 5,\n      "
+                + "\"dayOfMonth\": 25,\n      "
+                + "\"hourOfDay\": 0,\n      "
+                + "\"minute\": 0,\n      "
+                + "\"second\": 0\n    },\n    "
+                + "\"salary\": 100.0\n  }\n]";
+        assertThat(engine.generate(em -> true), is(expect));
     }
 }

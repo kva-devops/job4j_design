@@ -6,6 +6,8 @@ public class ReportEngine implements Report {
 
     private Store store;
 
+    public ReportEngine() { }
+
     public ReportEngine(Store store) {
         this.store = store;
     }
