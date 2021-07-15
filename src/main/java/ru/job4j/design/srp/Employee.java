@@ -1,24 +1,35 @@
 package ru.job4j.design.srp;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 
-@XmlRootElement(name = "employee")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
+class Decor {
+    @XmlElementWrapper(name = "list-employee", nillable = true)
+    public List<Employee> employeeList = new ArrayList<>();
+}
 
 public class Employee {
-    @XmlAttribute
+
+    @XmlAttribute(name = "name")
     private String name;
 
-    @XmlAttribute
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    @XmlAttribute(name = "hired")
     private Calendar hired;
 
-    @XmlAttribute
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    @XmlAttribute(name = "fired")
     private Calendar fired;
 
-    @XmlAttribute
+    @XmlAttribute(name = "salary")
     private double salary;
 
     public Employee() { }
@@ -30,37 +41,23 @@ public class Employee {
         this.salary = salary;
     }
 
+
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Calendar getHired() {
         return hired;
     }
 
-    public void setHired(Calendar hired) {
-        this.hired = hired;
-    }
-
     public Calendar getFired() {
         return fired;
-    }
-
-    public void setFired(Calendar fired) {
-        this.fired = fired;
     }
 
     public double getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
 
     @Override
     public boolean equals(Object o) {

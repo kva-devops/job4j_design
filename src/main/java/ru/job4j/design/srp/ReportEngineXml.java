@@ -8,29 +8,32 @@ import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class ReportEngineXml implements Report {
-    private Store store;
-
-    public ReportEngineXml() { }
+    private final Store store;
 
     public ReportEngineXml(Store store) {
         this.store = store;
     }
 
     @Override
-    public String generate(Predicate<Employee> filter) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(Employee.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml = "";
-        try (StringWriter writer = new StringWriter()) {
-            for (Employee elem : store.findBy(filter)) {
-                marshaller.marshal(elem, writer);
+    public String generate(Predicate<Employee> filter) {
+        Decor decor = new Decor();
+        decor.employeeList.addAll(store.findBy(filter));
+        try {
+            JAXBContext context = JAXBContext.newInstance(Decor.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            String xml = "";
+            try (StringWriter writer = new StringWriter()) {
+                marshaller.marshal(decor, writer);
+                xml = writer.getBuffer().toString();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            xml = writer.getBuffer().toString();
-        } catch (Exception e) {
-
+            return xml;
+        } catch (JAXBException e) {
+            e.printStackTrace();
         }
-        return xml;
+        return null;
     }
 
     public static void main(String[] args) throws JAXBException {
