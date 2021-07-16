@@ -2,12 +2,6 @@ package ru.job4j.parking.lsp;
 
 public class Track extends Transport {
 
-    String name;
-
-    int carNumber;
-
-    int size;
-
     public Track(String name, int carNumber, int size) {
         this.name = name;
         this.carNumber = carNumber;
