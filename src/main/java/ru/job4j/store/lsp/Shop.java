@@ -3,29 +3,33 @@ package ru.job4j.store.lsp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop implements SortingFoods {
+public class Shop implements Store {
 
-    static List<Food> shopList = new ArrayList<>();
+    List<Food> shopList = new ArrayList<>();
 
     @Override
-    public void sortFoods() {
-        List<Food> forRemoveList = new ArrayList<>();
-        int valueFresh;
-        for (Food elem : Shop.shopList) {
-            valueFresh = elem.productShelfLife();
-            if (valueFresh <= 25 && valueFresh > 0) {
-                if (elem.getPrice() != elem.getDiscount()) {
-                    elem.setPrice(elem.getDiscount());
-                }
-            } else if (valueFresh <= 0) {
-                Trash.trashList.add(elem);
-                forRemoveList.add(elem);
-            }
-        }
-        Shop.shopList.removeAll(forRemoveList);
+    public boolean accept(Food food) {
+        return food.productShelfLife() < 75 && food.productShelfLife() > 0;
     }
 
-    public String printList() {
-        return "Shop: " + shopList.toString();
+    @Override
+    public void add(Food food) {
+        this.getStore().add(food);
+    }
+
+    @Override
+    public List<Food> getStore() {
+        return shopList;
+    }
+
+    public boolean discountCheck(Food food) {
+        if (food.productShelfLife() < 25 && food.productShelfLife() > 0) {
+            return food.getDiscount() != food.getPrice();
+        }
+        return false;
+    }
+
+    public void setDiscountPrice(Food food) {
+        food.setPrice(food.getDiscount());
     }
 }

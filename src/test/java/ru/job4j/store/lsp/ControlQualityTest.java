@@ -26,8 +26,8 @@ public class ControlQualityTest {
                 new Warehouse(), new Shop(), new Trash()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.checkFoods();
-        assertThat(Warehouse.warehouseList.get(0).getName(), is("Milk1"));
+        controlQuality.sortFoods();
+        assertThat(controlQuality.warehouse.getStore().get(0).getName(), is("Milk1"));
     }
 
     @Test
@@ -44,8 +44,8 @@ public class ControlQualityTest {
                 new Warehouse(), new Shop(), new Trash()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.checkFoods();
-        assertThat(Trash.trashList.get(0).getName(), is("Meat2"));
+        controlQuality.sortFoods();
+        assertThat(controlQuality.trash.getStore().get(0).getName(), is("Meat2"));
     }
 
     @Test
@@ -63,9 +63,8 @@ public class ControlQualityTest {
                 new Warehouse(), new Shop(), new Trash()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.checkFoods();
-        assertThat(Shop.shopList.get(0).getName(), is("Milk2"));
-        Shop.shopList.clear();
+        controlQuality.sortFoods();
+        assertThat(controlQuality.shop.getStore().get(0).getName(), is("Milk2"));
     }
 
     @Test
@@ -82,10 +81,9 @@ public class ControlQualityTest {
                 new Warehouse(), new Shop(), new Trash()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.checkFoods();
-        double result = Shop.shopList.get(0).getPrice();
-        double expected = Shop.shopList.get(0).getDiscount();
-        System.out.println(controlQuality.shop.printList());
+        controlQuality.sortFoods();
+        double result = controlQuality.shop.getStore().get(0).getPrice();
+        double expected = controlQuality.shop.getStore().get(0).getDiscount();
         assertThat(result, is(expected));
     }
 }

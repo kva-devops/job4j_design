@@ -71,13 +71,6 @@ public class Food {
     }
 }
 
-class Bread extends Food {
-
-    public Bread(String name, LocalDate expiryDate, LocalDate createDate, double price, double discount) {
-        super(name, expiryDate, createDate, price, discount);
-    }
-}
-
 class Milk extends Food {
 
     public Milk(String name, LocalDate expiryDate, LocalDate createDate, double price, double discount) {

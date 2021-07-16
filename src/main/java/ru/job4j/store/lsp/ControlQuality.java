@@ -1,5 +1,6 @@
 package ru.job4j.store.lsp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
@@ -15,12 +16,38 @@ public class ControlQuality {
     }
 
     public void supplyFoods(List<Food> foodList) {
-        Warehouse.warehouseList.addAll(foodList);
+        this.warehouse.warehouseList.addAll(foodList);
     }
 
-    public void checkFoods() {
-        this.warehouse.sortFoods();
-        this.shop.sortFoods();
+    private List<Food> compactAllFoodToOneList() {
+        List<Food> foodListCommon = new ArrayList<>();
+        foodListCommon.addAll(warehouse.getStore());
+        foodListCommon.addAll(shop.getStore());
+        foodListCommon.addAll(trash.getStore());
+        clearAllStores();
+        return foodListCommon;
+    }
+
+    private void clearAllStores() {
+        warehouse.getStore().clear();
+        shop.getStore().clear();
+        trash.getStore().clear();
+    }
+
+    public void sortFoods() {
+        List<Food> storeList = compactAllFoodToOneList();
+        for (Food elem : storeList) {
+            if (warehouse.accept(elem)) {
+                this.warehouse.add(elem);
+            } else if (shop.accept(elem)) {
+                if (shop.discountCheck(elem)) {
+                    shop.setDiscountPrice(elem);
+                }
+                this.shop.add(elem);
+            } else if (trash.accept(elem)) {
+                this.trash.add(elem);
+            }
+        }
     }
 }
 
