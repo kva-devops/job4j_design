@@ -2,7 +2,6 @@ package ru.job4j.menu.isp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -72,6 +71,7 @@ public class Item implements PrintingItem, ActionItem {
         )), 0);
         main.printItem();
         main.userInput();
+        main.actionItem();
 
     }
 }
