@@ -2,12 +2,18 @@ package ru.job4j.menu.isp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class Item implements PrintingItem, ActionItem {
+
+    static List<String> menuItems = new ArrayList<>();
+
     String name;
+
     List<Item> child;
+
     int deepLevel;
 
     public Item(String name, List<Item> child, int deepLevel) {
@@ -18,7 +24,9 @@ public class Item implements PrintingItem, ActionItem {
 
     @Override
     public void printItem() {
+
         System.out.println(lineBeforeItem(this) + " " + this.getName());
+        Item.menuItems.add(this.getName());
         if (this.child.size() != 0) {
             for (Item elem : this.child) {
                 elem.printItem();
@@ -38,13 +46,31 @@ public class Item implements PrintingItem, ActionItem {
     }
 
     @Override
-    public void actionItem() {
-
-    }
-
-    @Override
     public void userInput() {
-
+        boolean markTrueChoiceMenuItem = false;
+        String result;
+        System.out.println("select one of the menu items or \"exit\" for exit ...");
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                if (scanner.hasNextLine()) {
+                    result = scanner.nextLine();
+                    if ("exit".equals(result)) {
+                        break;
+                    }
+                    for (String item : menuItems) {
+                        if (result.equals(item)) {
+                            markTrueChoiceMenuItem = true;
+                            System.out.println("Your choice is " + item);
+                            break;
+                        }
+                    }
+                    if (!markTrueChoiceMenuItem) {
+                        System.out.println("select one of the menu items or \"exit\" for exit !!!");
+                    }
+                    markTrueChoiceMenuItem = false;
+                }
+            }
+        }
     }
 
     public String getName() {
@@ -71,7 +97,5 @@ public class Item implements PrintingItem, ActionItem {
         )), 0);
         main.printItem();
         main.userInput();
-        main.actionItem();
-
     }
 }
