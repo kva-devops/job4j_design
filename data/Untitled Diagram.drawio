@@ -1,1 +1,44 @@
-<mxfile host="app.diagrams.net" modified="2021-06-17T09:31:29.895Z" agent="5.0 (X11)" version="14.7.10" etag="_HJIRFlCFACn8SCbm_RB" type="github"><diagram id="sx75wYQl_r48Mykr8kZf">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-07-16T14:57:44.160Z" agent="5.0 (X11)" etag="YyluoOBPElvBM1lji0tQ" version="14.8.6" type="github">
+  <diagram id="iO-qZukseta9pJgzEIQT" name="Page-1">
+    <mxGraphModel dx="1710" dy="827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Y-FoQX39SXVyE9QL8xDJ-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Y-FoQX39SXVyE9QL8xDJ-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-2" value="&lt;div&gt;&lt;b&gt;Abstract&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Class Transport&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="370" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Y-FoQX39SXVyE9QL8xDJ-3" target="Y-FoQX39SXVyE9QL8xDJ-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-3" value="&lt;div&gt;&lt;b&gt;Class Automobile&lt;/b&gt;&lt;/div&gt;&lt;div&gt;extends Transport&lt;br&gt;&lt;/div&gt;&lt;div&gt;int size;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="450" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Y-FoQX39SXVyE9QL8xDJ-5" target="Y-FoQX39SXVyE9QL8xDJ-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-5" value="&lt;div&gt;&lt;b&gt;Class Track&lt;/b&gt;&lt;/div&gt;&lt;div&gt;extends Transport&lt;br&gt;&lt;/div&gt;&lt;div&gt;int size;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="450" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="Y-FoQX39SXVyE9QL8xDJ-3" target="Y-FoQX39SXVyE9QL8xDJ-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-15" value="&lt;h1&gt;Парковка.&lt;/h1&gt;&lt;div&gt;Class &lt;b&gt;Transport&lt;/b&gt; является абстрактым и родительским для &lt;b&gt;Track&lt;/b&gt; и &lt;b&gt;Automobile&lt;/b&gt;.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Интерфейс &lt;b&gt;ControlParking&lt;/b&gt; отвечаtn за основную логику распределение разного вида транспорта на парковке.&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="30" y="700" width="770" height="295" as="geometry" />
+        </mxCell>
+        <mxCell id="Y-FoQX39SXVyE9QL8xDJ-16" value="&lt;div&gt;&lt;b&gt;interface ControlParking&lt;/b&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;boolean park(Transport transport);&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="165" y="590" width="230" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
