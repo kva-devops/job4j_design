@@ -1,40 +1,43 @@
 package ru.job4j.store.lsp;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ControlQuality {
+public class ControlQuality implements ReSorting {
 
     Warehouse warehouse;
     Shop shop;
     Trash trash;
+    BufferStore bufferStore;
 
-    public ControlQuality(Warehouse warehouse, Shop shop, Trash trash) {
+    public ControlQuality(Warehouse warehouse, Shop shop, Trash trash, BufferStore bufferStore) {
         this.warehouse = warehouse;
         this.shop = shop;
         this.trash = trash;
+        this.bufferStore = bufferStore;
     }
 
     public void supplyFoods(List<Food> foodList) {
         this.warehouse.warehouseList.addAll(foodList);
     }
 
-    private List<Food> compactAllFoodToOneList() {
-        List<Food> foodListCommon = new ArrayList<>();
-        foodListCommon.addAll(warehouse.getStore());
-        foodListCommon.addAll(shop.getStore());
-        foodListCommon.addAll(trash.getStore());
+    @Override
+    public List<Food> compactAllFoodToOneList() {
+        bufferStore.getStore().addAll(warehouse.getStore());
+        bufferStore.getStore().addAll(shop.getStore());
+        bufferStore.getStore().addAll(trash.getStore());
         clearAllStores();
-        return foodListCommon;
+        return bufferStore.getStore();
     }
 
-    private void clearAllStores() {
+    @Override
+    public void clearAllStores() {
         warehouse.getStore().clear();
         shop.getStore().clear();
         trash.getStore().clear();
     }
 
-    public void sortFoods() {
+    @Override
+    public void reSort() {
         List<Food> storeList = compactAllFoodToOneList();
         for (Food elem : storeList) {
             if (warehouse.accept(elem)) {

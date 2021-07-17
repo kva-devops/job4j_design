@@ -23,10 +23,10 @@ public class ControlQualityTest {
                 )
         );
         ControlQuality controlQuality = new ControlQuality(
-                new Warehouse(), new Shop(), new Trash()
+                new Warehouse(), new Shop(), new Trash(), new BufferStore()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.sortFoods();
+        controlQuality.reSort();
         assertThat(controlQuality.warehouse.getStore().get(0).getName(), is("Milk1"));
     }
 
@@ -41,10 +41,10 @@ public class ControlQualityTest {
                 )
         );
         ControlQuality controlQuality = new ControlQuality(
-                new Warehouse(), new Shop(), new Trash()
+                new Warehouse(), new Shop(), new Trash(), new BufferStore()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.sortFoods();
+        controlQuality.reSort();
         assertThat(controlQuality.trash.getStore().get(0).getName(), is("Meat2"));
     }
 
@@ -60,10 +60,10 @@ public class ControlQualityTest {
                 )
         );
         ControlQuality controlQuality = new ControlQuality(
-                new Warehouse(), new Shop(), new Trash()
+                new Warehouse(), new Shop(), new Trash(), new BufferStore()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.sortFoods();
+        controlQuality.reSort();
         assertThat(controlQuality.shop.getStore().get(0).getName(), is("Milk2"));
     }
 
@@ -72,16 +72,16 @@ public class ControlQualityTest {
         List<Food> suppl = new ArrayList<>(
                 List.of(
                         new Meat("Meat1",
-                                LocalDate.of(2021, 7, 17),
+                                LocalDate.of(2021, 7, 20),
                                 LocalDate.of(2021, 6, 13),
                                 500, 250)
                 )
         );
         ControlQuality controlQuality = new ControlQuality(
-                new Warehouse(), new Shop(), new Trash()
+                new Warehouse(), new Shop(), new Trash(), new BufferStore()
         );
         controlQuality.supplyFoods(suppl);
-        controlQuality.sortFoods();
+        controlQuality.reSort();
         double result = controlQuality.shop.getStore().get(0).getPrice();
         double expected = controlQuality.shop.getStore().get(0).getDiscount();
         assertThat(result, is(expected));
