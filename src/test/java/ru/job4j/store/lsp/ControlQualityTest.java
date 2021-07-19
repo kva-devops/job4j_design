@@ -12,6 +12,20 @@ import static org.junit.Assert.assertThat;
 public class ControlQualityTest {
 
     @Test
+    public void distributeMethodTesting() {
+        Food food = new Milk(
+                "Milk1",
+                LocalDate.of(2021, 12, 23),
+                LocalDate.of(2021, 7, 14),
+                50.0, 25.0);
+        ControlQuality controlQuality = new ControlQuality(
+                new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        );
+        controlQuality.distribute(food);
+        assertThat(controlQuality.warehouse.getStore().get(0).getName(), is("Milk1"));
+    }
+
+    @Test
     public void whenWarehouseFoodOnly() {
         List<Food> suppl = new ArrayList<>(
                 List.of(

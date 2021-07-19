@@ -9,7 +9,7 @@ public class Trash implements Store {
 
     @Override
     public boolean accept(Food food) {
-        return food.productShelfLife() <= 0;
+        return getPercent(food) <= 0;
     }
 
     @Override

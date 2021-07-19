@@ -4,12 +4,12 @@ import java.util.List;
 
 public class ControlQuality implements ReSorting {
 
-    Warehouse warehouse;
-    Shop shop;
-    Trash trash;
-    BufferStore bufferStore;
+    Store warehouse;
+    Store shop;
+    Store trash;
+    Store bufferStore;
 
-    public ControlQuality(Warehouse warehouse, Shop shop, Trash trash, BufferStore bufferStore) {
+    public ControlQuality(Store warehouse, Store shop, Store trash, Store bufferStore) {
         this.warehouse = warehouse;
         this.shop = shop;
         this.trash = trash;
@@ -17,7 +17,20 @@ public class ControlQuality implements ReSorting {
     }
 
     public void supplyFoods(List<Food> foodList) {
-        this.warehouse.warehouseList.addAll(foodList);
+        this.warehouse.getStore().addAll(foodList);
+    }
+
+    public void distribute(Food food) {
+        if (warehouse.accept(food)) {
+            this.warehouse.add(food);
+        } else if (shop.accept(food)) {
+            if (shop.discountCheck(food)) {
+                shop.setDiscountPrice(food);
+            }
+            this.shop.add(food);
+        } else if (trash.accept(food)) {
+            this.trash.add(food);
+        }
     }
 
     @Override
@@ -53,4 +66,3 @@ public class ControlQuality implements ReSorting {
         }
     }
 }
-

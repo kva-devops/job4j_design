@@ -1,14 +1,13 @@
 package ru.job4j.store.lsp;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 public class Food {
-    String name;
-    LocalDate expiryDate;
-    LocalDate createDate;
-    double price;
-    double discount;
+    private String name;
+    private LocalDate expiryDate;
+    private LocalDate createDate;
+    private double price;
+    private double discount;
 
     public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, double discount) {
         this.name = name;
@@ -42,23 +41,6 @@ public class Food {
         return discount;
     }
 
-    public int productShelfLife() {
-        LocalDate createDate = this.getCreateDate();
-        LocalDate expiredDate = this.getExpiryDate();
-        LocalDate today = LocalDate.now();
-        Period productLife = Period.between(createDate, expiredDate);
-        Period lostProductLife = Period.between(today, expiredDate);
-        int productAllLifeInDays =
-                productLife.getDays()
-                        + productLife.getMonths() * 30
-                        + productLife.getYears() * 365;
-        int productLostLifeInDays =
-                lostProductLife.getDays()
-                        + lostProductLife.getMonths() * 30
-                        + lostProductLife.getYears() * 365;
-        return productLostLifeInDays * 100 / productAllLifeInDays;
-    }
-
     @Override
     public String toString() {
         return "Food{"
@@ -84,5 +66,3 @@ class Meat extends Food {
         super(name, expiryDate, createDate, price, discount);
     }
 }
-
-

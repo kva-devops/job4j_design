@@ -9,7 +9,7 @@ public class Warehouse implements Store {
 
     @Override
     public boolean accept(Food food) {
-        return food.productShelfLife() >= 75;
+        return getPercent(food) >= 75;
     }
 
     @Override
