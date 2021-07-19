@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Item implements PrintingItem, ActionItem {
 
-    static List<String> menuItems = new ArrayList<>();
+    List<String> menuItems = new ArrayList<>();
 
     String name;
 
@@ -22,11 +22,15 @@ public class Item implements PrintingItem, ActionItem {
         this.deepLevel = deepLevel;
     }
 
+    public List<String> getMenuItems() {
+        return menuItems;
+    }
+
     @Override
     public void printItem() {
 
         System.out.println(lineBeforeItem(this) + " " + this.getName());
-        Item.menuItems.add(this.getName());
+        this.getMenuItems().add(this.getName());
         if (this.child.size() != 0) {
             for (Item elem : this.child) {
                 elem.printItem();
@@ -47,7 +51,6 @@ public class Item implements PrintingItem, ActionItem {
 
     @Override
     public void userInput() {
-        boolean markTrueChoiceMenuItem = false;
         String result;
         System.out.println("select one of the menu items or \"exit\" for exit ...");
         try (Scanner scanner = new Scanner(System.in)) {
@@ -57,18 +60,20 @@ public class Item implements PrintingItem, ActionItem {
                     if ("exit".equals(result)) {
                         break;
                     }
-                    for (String item : menuItems) {
-                        if (result.equals(item)) {
-                            markTrueChoiceMenuItem = true;
-                            System.out.println("Your choice is " + item);
-                            break;
-                        }
-                    }
-                    if (!markTrueChoiceMenuItem) {
-                        System.out.println("select one of the menu items or \"exit\" for exit !!!");
-                    }
-                    markTrueChoiceMenuItem = false;
+                    findCoincidenceNameItem(result);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void findCoincidenceNameItem(String s) {
+        if (this.getName().equals(s)) {
+            System.out.println(this.getName());
+        }
+        if (this.child.size() != 0) {
+            for (Item elem : this.child) {
+                elem.findCoincidenceNameItem(s);
             }
         }
     }
