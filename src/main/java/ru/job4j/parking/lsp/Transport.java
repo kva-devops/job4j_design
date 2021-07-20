@@ -1,7 +1,7 @@
 package ru.job4j.parking.lsp;
 
 public abstract class Transport {
-    String name;
-    int carNumber;
-    int size;
+    protected String name;
+    protected int carNumber;
+    protected int size;
 }
