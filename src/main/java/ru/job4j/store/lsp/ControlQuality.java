@@ -4,64 +4,60 @@ import java.util.List;
 
 public class ControlQuality implements ReSorting {
 
-    Store warehouse;
-    Store shop;
-    Store trash;
-    Store bufferStore;
+    List<Store> storeList;
 
-    public ControlQuality(Store warehouse, Store shop, Store trash, Store bufferStore) {
-        this.warehouse = warehouse;
-        this.shop = shop;
-        this.trash = trash;
-        this.bufferStore = bufferStore;
+    public ControlQuality(List<Store> storeList) {
+        this.storeList = storeList;
     }
 
     public void supplyFoods(List<Food> foodList) {
-        this.warehouse.getStore().addAll(foodList);
+        this.storeList.get(0).getStore().addAll(foodList);
     }
 
     public void distribute(Food food) {
-        if (warehouse.accept(food)) {
-            this.warehouse.add(food);
-        } else if (shop.accept(food)) {
-            if (shop.discountCheck(food)) {
-                shop.setDiscountPrice(food);
+        if (this.storeList.get(0).accept(food)) {
+            this.storeList.get(0).add(food);
+        } else if (this.storeList.get(1).accept(food)) {
+            Shop shopBuff = (Shop) this.storeList.get(1);
+            if (shopBuff.discountCheck(food)) {
+                shopBuff.setDiscountPrice(food);
             }
-            this.shop.add(food);
-        } else if (trash.accept(food)) {
-            this.trash.add(food);
+            this.storeList.get(1).add(food);
+        } else if (this.storeList.get(2).accept(food)) {
+            this.storeList.get(2).add(food);
         }
     }
 
     @Override
     public List<Food> compactAllFoodToOneList() {
-        bufferStore.getStore().addAll(warehouse.getStore());
-        bufferStore.getStore().addAll(shop.getStore());
-        bufferStore.getStore().addAll(trash.getStore());
+        this.storeList.get(3).getStore().addAll(this.storeList.get(0).getStore());
+        this.storeList.get(3).getStore().addAll(this.storeList.get(1).getStore());
+        this.storeList.get(3).getStore().addAll(this.storeList.get(2).getStore());
         clearAllStores();
-        return bufferStore.getStore();
+        return this.storeList.get(3).getStore();
     }
 
     @Override
     public void clearAllStores() {
-        warehouse.getStore().clear();
-        shop.getStore().clear();
-        trash.getStore().clear();
+        this.storeList.get(0).getStore().clear();
+        this.storeList.get(1).getStore().clear();
+        this.storeList.get(2).getStore().clear();
     }
 
     @Override
     public void reSort() {
         List<Food> storeList = compactAllFoodToOneList();
         for (Food elem : storeList) {
-            if (warehouse.accept(elem)) {
-                this.warehouse.add(elem);
-            } else if (shop.accept(elem)) {
-                if (shop.discountCheck(elem)) {
-                    shop.setDiscountPrice(elem);
+            if (this.storeList.get(0).accept(elem)) {
+                this.storeList.get(0).add(elem);
+            } else if (this.storeList.get(1).accept(elem)) {
+                Shop shopBuff = (Shop) this.storeList.get(1);
+                if (shopBuff.discountCheck(elem)) {
+                    shopBuff.setDiscountPrice(elem);
                 }
-                this.shop.add(elem);
-            } else if (trash.accept(elem)) {
-                this.trash.add(elem);
+                this.storeList.get(1).add(elem);
+            } else if (this.storeList.get(2).accept(elem)) {
+                this.storeList.get(2).add(elem);
             }
         }
     }

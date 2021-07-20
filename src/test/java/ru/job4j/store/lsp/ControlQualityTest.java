@@ -18,11 +18,14 @@ public class ControlQualityTest {
                 LocalDate.of(2021, 12, 23),
                 LocalDate.of(2021, 7, 14),
                 50.0, 25.0);
-        ControlQuality controlQuality = new ControlQuality(
+        List<Store> storeList = new ArrayList<>(List.of(
                 new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        ));
+        ControlQuality controlQuality = new ControlQuality(
+                storeList
         );
         controlQuality.distribute(food);
-        assertThat(controlQuality.warehouse.getStore().get(0).getName(), is("Milk1"));
+        assertThat(controlQuality.storeList.get(0).getStore().get(0).getName(), is("Milk1"));
     }
 
     @Test
@@ -36,12 +39,15 @@ public class ControlQualityTest {
                                 50.0, 25.0)
                 )
         );
-        ControlQuality controlQuality = new ControlQuality(
+        List<Store> storeList = new ArrayList<>(List.of(
                 new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        ));
+        ControlQuality controlQuality = new ControlQuality(
+                storeList
         );
         controlQuality.supplyFoods(suppl);
         controlQuality.reSort();
-        assertThat(controlQuality.warehouse.getStore().get(0).getName(), is("Milk1"));
+        assertThat(controlQuality.storeList.get(0).getStore().get(0).getName(), is("Milk1"));
     }
 
     @Test
@@ -54,12 +60,15 @@ public class ControlQualityTest {
                                 500, 250)
                 )
         );
-        ControlQuality controlQuality = new ControlQuality(
+        List<Store> storeList = new ArrayList<>(List.of(
                 new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        ));
+        ControlQuality controlQuality = new ControlQuality(
+                storeList
         );
         controlQuality.supplyFoods(suppl);
         controlQuality.reSort();
-        assertThat(controlQuality.trash.getStore().get(0).getName(), is("Meat2"));
+        assertThat(controlQuality.storeList.get(2).getStore().get(0).getName(), is("Meat2"));
     }
 
     @Test
@@ -73,12 +82,15 @@ public class ControlQualityTest {
                                 50.0, 25.0)
                 )
         );
-        ControlQuality controlQuality = new ControlQuality(
+        List<Store> storeList = new ArrayList<>(List.of(
                 new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        ));
+        ControlQuality controlQuality = new ControlQuality(
+                storeList
         );
         controlQuality.supplyFoods(suppl);
         controlQuality.reSort();
-        assertThat(controlQuality.shop.getStore().get(0).getName(), is("Milk2"));
+        assertThat(controlQuality.storeList.get(1).getStore().get(0).getName(), is("Milk2"));
     }
 
     @Test
@@ -86,18 +98,21 @@ public class ControlQualityTest {
         List<Food> suppl = new ArrayList<>(
                 List.of(
                         new Meat("Meat1",
-                                LocalDate.of(2021, 7, 20),
+                                LocalDate.of(2021, 7, 25),
                                 LocalDate.of(2021, 6, 13),
                                 500, 250)
                 )
         );
-        ControlQuality controlQuality = new ControlQuality(
+        List<Store> storeList = new ArrayList<>(List.of(
                 new Warehouse(), new Shop(), new Trash(), new BufferStore()
+        ));
+        ControlQuality controlQuality = new ControlQuality(
+                storeList
         );
         controlQuality.supplyFoods(suppl);
         controlQuality.reSort();
-        double result = controlQuality.shop.getStore().get(0).getPrice();
-        double expected = controlQuality.shop.getStore().get(0).getDiscount();
+        double result = controlQuality.storeList.get(1).getStore().get(0).getPrice();
+        double expected = controlQuality.storeList.get(1).getStore().get(0).getDiscount();
         assertThat(result, is(expected));
     }
 }

@@ -28,15 +28,4 @@ public interface Store {
                         + lostProductLife.getYears() * 365;
         return productLostLifeInDays * 100 / productAllLifeInDays;
     }
-
-    default boolean discountCheck(Food food) {
-        if (getPercent(food) < 25 && getPercent(food) > 0) {
-            return food.getDiscount() != food.getPrice();
-        }
-        return false;
-    }
-
-    default void setDiscountPrice(Food food) {
-        food.setPrice(food.getDiscount());
-    }
 }
