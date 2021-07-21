@@ -2,8 +2,6 @@ package ru.job4j.parking.lsp;
 
 import org.junit.Test;
 
-import java.sql.SQLTransactionRollbackException;
-
 import static org.junit.Assert.assertThat;
 
 public class ControlParkingTest {
