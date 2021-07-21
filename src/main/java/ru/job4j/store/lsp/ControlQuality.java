@@ -15,16 +15,11 @@ public class ControlQuality implements ReSorting {
     }
 
     public void distribute(Food food) {
-        if (this.storeList.get(0).accept(food)) {
-            this.storeList.get(0).add(food);
-        } else if (this.storeList.get(1).accept(food)) {
-            Shop shopBuff = (Shop) this.storeList.get(1);
-            if (shopBuff.discountCheck(food)) {
-                shopBuff.setDiscountPrice(food);
+        for (Store store : storeList) {
+            if (store.accept(food)) {
+                store.add(food);
+                break;
             }
-            this.storeList.get(1).add(food);
-        } else if (this.storeList.get(2).accept(food)) {
-            this.storeList.get(2).add(food);
         }
     }
 

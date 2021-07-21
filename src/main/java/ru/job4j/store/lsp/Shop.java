@@ -14,6 +14,9 @@ public class Shop implements Store, Discount {
 
     @Override
     public void add(Food food) {
+        if (discountCheck(food)) {
+            setDiscountPrice(food);
+        }
         this.getStore().add(food);
     }
 
