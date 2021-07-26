@@ -2,6 +2,7 @@ package ru.job4j.parking.lsp;
 
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ControlParkingTest {
@@ -15,8 +16,7 @@ public class ControlParkingTest {
         ControlParking parking = new Control(automobilePlaceAmount, trackPlaceAmount);
         Transport automobile = new Automobile(name, carNumber);
         parking.park(automobile);
-        assertThat(parking.getTransport(carNumber), is(automobile));
-        assertThat(parking.getFreeAutomobilePlace(), is(0));
+        assertThat(parking.getParkingList().getTransport(carNumber), is(automobile));
     }
 
     @Test
@@ -28,8 +28,7 @@ public class ControlParkingTest {
         ControlParking parking = new Control(automobilePlaceAmount, trackPlaceAmount);
         Transport track = new Track(name, carNumber, 2);
         parking.park(track);
-        assertThat(parking.getTransport(carNumber), is(track));
-        assertThat(parking.getFreeTrackPlace(), is(0));
+        assertThat(parking.getParkingList().getTransport(carNumber), is(track));
     }
 
     @Test
@@ -41,14 +40,12 @@ public class ControlParkingTest {
         Transport automobile = new Automobile("automobile", 888);
         parking.park(track);
         parking.park(automobile);
-        assertThat(parking.getTransport(111), is(track));
-        assertThat(parking.getTransport(888), is(automobile));
-        assertThat(parking.getFreeTrackPlace(), is(0));
-        assertThat(parking.getFreeAutomobilePlace(), is(0));
+        assertThat(parking.getParkingList().getTransport(111), is(track));
+        assertThat(parking.getParkingList().getTransport(888), is(automobile));
     }
 
 
-    @Test(expected = Exception.class)
+    @Test
     public void whenHasNotPlaceForAutomobile() {
         int automobilePlaceAmount = 0;
         int trackPlaceAmount = 1;
@@ -56,7 +53,7 @@ public class ControlParkingTest {
         int carNumber = 123;
         ControlParking parking = new Control(automobilePlaceAmount, trackPlaceAmount);
         Transport automobile = new Automobile(name, carNumber);
-        parking.park(automobile);
+        assertThat(parking.park(automobile), is(false));
     }
 
     @Test
@@ -68,7 +65,6 @@ public class ControlParkingTest {
         ControlParking parking = new Control(automobilePlaceAmount, trackPlaceAmount);
         Transport track = new Track(name, carNumber, 2);
         parking.park(track);
-        assertThat(parking.getTransport(carNumber), is(track));
-        assertThat(parking.getFreeAutomobilePlace(), is(0));
+        assertThat(parking.getParkingList().getTransport(carNumber), is(track));
     }
 }
